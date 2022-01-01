@@ -22,8 +22,8 @@
 
             </td>
             <td>
-                <form action="/children/gift" method="post">
-                <select name="gifts" id="gifts">
+                <form action="/children/{{this.firstName}}" method="post">
+                <select name="item" id="gifts">
                     {{#each @root.gifts}}
                         <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
                     {{/each}}
