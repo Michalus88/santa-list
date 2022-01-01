@@ -1,10 +1,13 @@
 const { Router } = require('express');
 
+const { children, gifts, add } = require('../mokData');
+
 module.exports = () => {
   const childrenRouter = Router();
 
   childrenRouter.get('/', (req, res) => {
-    res.send('children');
+    add();
+    res.render('children/list', { children, gifts });
   });
   return childrenRouter;
 };
