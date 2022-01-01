@@ -1,0 +1,39 @@
+<table>
+    <thead>
+    <tr>
+        <th>Imię</th>
+        <th>Lista prezentów</th>
+        <th>Wybierz prezent</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{log children}}
+    {{#each children}}
+        <tr>
+            <td>
+                {{this.firstName}}
+            </td>
+            <td>
+                {{#if this.gifts}}
+                    {{this.gifts}}
+                {{else}}
+                    Brak
+                {{/if}}
+
+            </td>
+            <td>
+                <select name="gifts" id="gifts">
+                    {{#each @root.gifts}}
+                        <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
+                    {{/each}}
+                </select>
+                <button>Dodaj</button>
+            </td>
+<!--            <td>-->
+<!--                <a href="/client/{{this.id}}">Szczegóły</a>-->
+<!--                <form action="/client/{{this.id}}?_method=DELETE" method="POST" ><button class="delete" type="submit" >Usuń</button></form>-->
+<!--            </td>-->
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
