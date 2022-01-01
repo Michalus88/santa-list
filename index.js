@@ -4,6 +4,11 @@ const { engine } = require('express-handlebars');
 const childrenRouter = require('./routes/childrenRouter');
 
 const app = express();
+
+app.use(express.urlencoded({
+  extended: true,
+}));
+app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
