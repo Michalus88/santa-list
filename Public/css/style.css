@@ -1,0 +1,84 @@
+*{
+    font-family: Arial;
+    box-sizing: border-box;
+}
+
+table {
+    margin: 20px auto;
+    width: 80%;
+
+}
+tr {
+    background-color: grey;
+}
+
+th, td {
+    padding: 10px
+;
+}
+
+th {
+    background-color: #585151;
+}
+
+tr:nth-child(2n) {
+    background-color: #afa9a9;
+}
+
+.client-form {
+    margin:0 auto;
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.client-form button {
+    margin: 10px;
+    width:80px;
+}
+
+.add-btn {
+    display: inline;
+    padding:10px 20px;
+    border-radius: 20px ;
+    font-weight: bold;
+    background-color: green;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.delete {
+    border:none;
+    border-radius: 5px;
+    background-color: #de2020;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.back-home {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline;
+    border-radius: 20px;
+    margin:10px auto;
+    padding:10px 20px;
+    background-color: grey;
+    color:black;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.error {
+    width: 80%;
+    margin:10px auto;
+    padding: 50px;
+    border:1px solid #f80303;
+    background-color: #ff9191;
+}
