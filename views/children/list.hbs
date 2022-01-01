@@ -22,12 +22,14 @@
 
             </td>
             <td>
+                <form action="/children/gift" method="post">
                 <select name="gifts" id="gifts">
                     {{#each @root.gifts}}
                         <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
                     {{/each}}
                 </select>
-                <button>Dodaj</button>
+                <button type="submit">Dodaj</button>
+                </form>
             </td>
 <!--            <td>-->
 <!--                <a href="/client/{{this.id}}">Szczegóły</a>-->
