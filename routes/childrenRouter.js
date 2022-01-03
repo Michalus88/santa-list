@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
 const { Child } = require('../mokData');
+const { GiftRecord } = require('../records/GiftRecord');
 
 module.exports = () => {
   const childrenRouter = Router();
