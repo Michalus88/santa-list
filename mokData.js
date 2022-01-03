@@ -12,10 +12,27 @@ class Child {
 
     return new Child(foundChild.firstName, foundChild.gifts);
   }
-};
+
+  static async findAll() {
+    return children.map(({ firstName, gifts }) => new Child({ firstName, gifts }));
+  }
+
+  addGift = (item) => {
+    let lack = true;
+
+    items.forEach((gift) => (gift.name === item
+      ? gift.amount === 0 || gift.name === undefined
+        ? lack = false : --gift.amount
+      : lack = false
+    ));
+    if (lack) {
+      this.gifts.push(item);
+    }
+  };
+}
 
 module.exports = {
+  Child,
   children,
-  gifts,
-  add,
+  gifts: items,
 };
