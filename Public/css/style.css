@@ -2,6 +2,9 @@
     font-family: Arial;
     box-sizing: border-box;
 }
+.header {
+    text-align: center;
+}
 
 table {
     margin: 20px auto;
