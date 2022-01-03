@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { children, gifts, add } = require('../mokData');
+const { Child } = require('../mokData');
 
 module.exports = () => {
   const childrenRouter = Router();
