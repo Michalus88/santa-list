@@ -16,16 +16,15 @@ class Child {
     return children.map(({ firstName, gifts }) => new Child(firstName, gifts));
   }
 
-  addGift = (isAvailable, itemName) => {
-    if (isAvailable) {
-      this.gifts.push(itemName);
-    } else {
-      console.error('produkt niedostępny');
-    }
-  };
+   addGift = async (isAvailable, itemName) => {
+     if (isAvailable) {
+       this.gifts.push(itemName);
+     } else {
+       throw new Error('Produkt niedostępny');
+     }
+   };
 }
 
 module.exports = {
   Child,
-  children,
 };
