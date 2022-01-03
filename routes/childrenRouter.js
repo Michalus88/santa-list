@@ -13,6 +13,10 @@ module.exports = () => {
     res.render('children/list', { children, gifts });
   });
 
+  childrenRouter.post('/add', async (req, res) => {
+    res.redirect('/children');
+  });
+
   childrenRouter.post('/:name', async (req, res) => {
     const child = await Child.findOne(req.params.name);
     const gift = await GiftRecord.findOne(req.body.item);
