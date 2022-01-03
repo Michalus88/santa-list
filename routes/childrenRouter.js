@@ -13,8 +13,11 @@ module.exports = () => {
   childrenRouter.post('/:name', (req, res) => {
     const { item } = req.body;
     const { name } = req.params;
-    add(name, item);
-    // console.log(item, name);
+    const child = Child.findOne(name);
+    console.log(child);
+    child.addGift(item);
+    // add(name, item);
+    console.log(item, name);
     res.redirect('/children');
   });
 
