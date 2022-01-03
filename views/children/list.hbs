@@ -24,6 +24,7 @@
             <td>
                 <form action="/children/{{this.firstName}}" method="post">
                 <select name="item" id="gifts">
+                    <option value="" selected disabled hidden>Wybierz prezent</option>
                     {{#each @root.gifts}}
                         <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
                     {{/each}}
