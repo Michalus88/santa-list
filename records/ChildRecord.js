@@ -22,16 +22,6 @@ class Child {
     } else {
       console.error('produkt niedostępny');
     }
-    // let lack = true;
-    //
-    // items.forEach((gift) => (gift.name === item
-    //   ? gift.amount === 0 || gift.name === undefined
-    //     ? lack = false : --gift.amount
-    //   : lack = false
-    // ));
-    // if (lack) {
-    //   this.gifts.push(item);
-    // }
   };
 }
 
