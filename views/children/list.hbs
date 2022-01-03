@@ -39,3 +39,24 @@
     {{/each}}
     </tbody>
 </table>
+<table>
+    <thead>
+    <tr>
+        <th>
+            Nowe Dziecko
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <form action="/children/add/:name" method="post">
+                <label for="newChild">Nowe Dziecko</label>
+                <input name="newChild" type="text">
+                <button type="submit">Dodaj</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
