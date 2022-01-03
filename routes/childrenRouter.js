@@ -6,8 +6,10 @@ const { GiftRecord } = require('../records/GiftRecord');
 module.exports = () => {
   const childrenRouter = Router();
 
-  childrenRouter.get('/', (req, res) => {
-    // add();
+  childrenRouter.get('/', async (req, res) => {
+    const children = await Child.findAll();
+    // console.log(children);
+    const gifts = await GiftRecord.findAll();
     res.render('children/list', { children, gifts });
   });
 
