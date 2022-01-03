@@ -13,14 +13,12 @@ module.exports = () => {
     res.render('children/list', { children, gifts });
   });
 
-  childrenRouter.post('/:name', (req, res) => {
-    const { item } = req.body;
-    const { name } = req.params;
-    const child = Child.findOne(name);
-    console.log(child);
-    child.addGift(item);
-    // add(name, item);
-    console.log(item, name);
+  childrenRouter.post('/:name', async (req, res) => {
+    const child = await Child.findOne(req.params.name);
+    const gift = await GiftRecord.findOne(req.body.item);
+    const [isAvailable, itemName] = await gift.quantityDecrement();
+    child.addGift(isAvailable, itemName);
+
     res.redirect('/children');
   });
 
