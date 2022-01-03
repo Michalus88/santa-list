@@ -1,16 +1,16 @@
 const children = [{ firstName: 'Michał', gifts: [] }, { firstName: 'Franek', gifts: [] }, { firstName: 'Karolina', gifts: [] }];
 const items = [{ name: 'kolejka', amount: 2 }, { name: 'klocki', amount: 10 }, { name: 'bączek', amount: 10 }];
 
-const add = (name, item) => {
-  let lack = true;
+class Child {
+  constructor(name, gifts = []) {
+    this.firstName = name;
+    this.gifts = gifts;
+  }
 
-  gifts.forEach((gift) => (gift.name === item
-    ? gift.amount === 0
-      ? lack = false : --gift.amount
-    : null
-  ));
-  if (lack) {
-    children.forEach((child) => (child.firstName === name ? child.gifts.push(item) : null));
+  static async findOne(name) {
+    const foundChild = children.filter((child) => child.firstName === name)[0];
+
+    return new Child(foundChild.firstName, foundChild.gifts);
   }
 };
 
