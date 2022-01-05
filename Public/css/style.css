@@ -2,6 +2,45 @@
     font-family: Arial;
     box-sizing: border-box;
 }
+body{
+    background-color: green;
+    color:white;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    width: 80vw;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+nav ul {
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+nav li {
+margin-right: 18px;
+
+}
+
+nav a {
+    display:block;
+    border:1px solid white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: red;
+    text-decoration: none;
+    color:white;
+    font-size: 18px;
+
+}
+
 .header {
     text-align: center;
 }
