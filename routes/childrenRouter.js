@@ -14,6 +14,8 @@ module.exports = () => {
   });
 
   childrenRouter.post('/add', async (req, res) => {
+    const { newChild } = req.body;
+    await Child.addNew(newChild);
     res.redirect('/children');
   });
 
