@@ -23,6 +23,10 @@ class GiftRecord {
     return items.map(({ name, amount }) => new GiftRecord(name, amount));
   }
 
+  static async add(name, quantity) {
+    items.push(new GiftRecord(name, quantity));
+  }
+
   async quantityDecrement() {
     let isAvailable = true;
     items.forEach((item) => (item.name === this.name
