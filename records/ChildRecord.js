@@ -16,6 +16,10 @@ class Child {
     return children.map(({ firstName, gifts }) => new Child(firstName, gifts));
   }
 
+  static async addNew(name) {
+    children.push(new Child(name, []));
+  }
+
    addGift = async (isAvailable, itemName) => {
      if (isAvailable) {
        this.gifts.push(itemName);
