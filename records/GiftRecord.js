@@ -2,7 +2,7 @@ const items = [{ name: 'kolejka', amount: 2 }, { name: 'klocki', amount: 10 }, {
 
 class GiftRecord {
   constructor(name, quantity) {
-    if (name === undefined || name.length > 3) {
+    if (name === undefined || name.length < 3) {
       throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
     }
     if (quantity === undefined || typeof quantity !== 'number') {
