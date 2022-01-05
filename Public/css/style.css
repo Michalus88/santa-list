@@ -64,22 +64,7 @@ th {
 }
 
 tr:nth-child(2n) {
-    background-color: #afa9a9;
-}
-
-.client-form {
-    margin:0 auto;
-    width: 50vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-}
-
-.client-form button {
-    margin: 10px;
-    width:80px;
+    background-color: #ff7272;
 }
 
 .add-btn {
