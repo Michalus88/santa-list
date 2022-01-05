@@ -110,3 +110,6 @@ tr:nth-child(2n) {
     border:1px solid #f80303;
     background-color: #ff9191;
 }
+.center {
+    text-align: center;
+}
