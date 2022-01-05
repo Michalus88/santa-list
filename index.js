@@ -15,11 +15,8 @@ app.use(express.static(`${__dirname}/public`));
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => {
-  res.send('home');
-});
+app.use('/', homeRouter());
 app.use('/children', childrenRouter());
 app.use('/gifts', giftRouter());
-app.use('/gifts', homeRouter());
 
 app.listen(3000);
