@@ -7,9 +7,9 @@ class GiftRecord {
   }
 
   static async findOne(itemName) {
-    const { amount, name } = items.filter((item) => item.name === itemName)[0];
+    const gift = items.filter((item) => item.name === itemName)[0];
 
-    return new GiftRecord(name, amount);
+    return gift === undefined ? null : new GiftRecord(gift.name, gift.amount);
   }
 
   static async findAll() {
