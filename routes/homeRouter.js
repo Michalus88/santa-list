@@ -3,8 +3,8 @@ const { Router } = require('express');
 module.exports = () => {
   const homeRouter = Router();
 
-  homeRouter.get('/', async (req, res) => {
-    res.render('home/home');
+  homeRouter.get('/', (req, res) => {
+    res.render('home');
   });
 
   return homeRouter;
