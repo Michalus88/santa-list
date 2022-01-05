@@ -1,0 +1,45 @@
+<table>
+    <thead>
+    <tr>
+        <th>
+            Nazwa prezentu
+        </th>
+        <th>
+            Ilość
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each gifts}}
+    <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.amount}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+<form action="/gifts" method="post">
+    <table>
+    <thead>
+    <tr>
+        <th>
+            <lable for="gift">Nazwa prezentu</lable>
+        </th>
+        <th>
+            <lable for="gift">Ilość</lable>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <input type="text" name="gift" >
+        </td>
+        <td>
+            <input type="number" name="quantity" >
+        </td>
+        <td><button type="submit" >+</button></td>
+    </tr>
+    </tbody>
+    </table>
+</form>
