@@ -8,7 +8,7 @@ class Child {
 
   static async findOne(name) {
     const foundChild = children.filter((child) => child.firstName === name)[0];
-    console.log(foundChild);
+
     return new Child(foundChild.firstName, foundChild.gifts);
   }
 
