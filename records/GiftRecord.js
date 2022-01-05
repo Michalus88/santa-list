@@ -1,9 +1,16 @@
 const items = [{ name: 'kolejka', amount: 2 }, { name: 'klocki', amount: 10 }, { name: 'bączek', amount: 10 }];
 
 class GiftRecord {
-  constructor(name, amount) {
+  constructor(name, quantity) {
+    if (name === undefined || name.length > 3) {
+      throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
+    }
+    if (quantity === undefined || typeof quantity !== 'number') {
+      throw new Error('Ilość jest wymagana i wartość musi być liczbą');
+    }
+
     this.name = name;
-    this.amount = amount;
+    this.amount = quantity;
   }
 
   static async findOne(itemName) {
