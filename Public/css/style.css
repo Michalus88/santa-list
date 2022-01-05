@@ -69,12 +69,13 @@ tr:nth-child(2n) {
 
 .add-btn {
     display: inline;
-    padding:10px 20px;
-    border-radius: 20px ;
+    padding:0px 10px;
+    border:2px solid green;
+    border-radius: 5px ;
     font-weight: bold;
-    background-color: green;
-    color: white;
-    text-transform: uppercase;
+    background-color: white;
+    color: green;
+    font-size: 20px;
     text-decoration: none;
 }
 
