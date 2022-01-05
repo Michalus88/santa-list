@@ -22,8 +22,10 @@ module.exports = () => {
   childrenRouter.post('/:name', async (req, res) => {
     const child = await Child.findOne(req.params.name);
     const gift = await GiftRecord.findOne(req.body.item);
-    const [isAvailable, itemName] = await gift.quantityDecrement();
-    child.addGift(isAvailable, itemName);
+    if (gift) {
+      const [isAvailable, itemName] = await gift.quantityDecrement();
+      child.addGift(isAvailable, itemName);
+    } else throw new Error('Nie ma takiego przedmiotu');
 
     res.redirect('/children');
   });
