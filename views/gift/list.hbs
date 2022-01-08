@@ -13,8 +13,8 @@
     <tbody>
     {{#each gifts}}
     <tr>
-        <td>{{this.name}}</td>
-        <td>{{this.amount}}</td>
+        <td class="center" >{{this.name}}</td>
+        <td class="center" >{{this.amount}}</td>
     </tr>
     {{/each}}
     </tbody>
@@ -33,13 +33,13 @@
     </thead>
     <tbody>
     <tr>
-        <td>
-            <input type="text" name="gift" required>
+        <td  class="center">
+            <input type="text" name="giftName" required>
         </td>
-        <td>
+        <td class="center" >
             <input type="number" name="quantity" required>
         </td>
-        <td><button type="submit" >+</button></td>
+        <td  class="center"><button class="add-btn" type="submit" >+</button></td>
     </tr>
     </tbody>
     </table>
