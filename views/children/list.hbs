@@ -21,7 +21,7 @@
                 {{/if}}
 
             </td>
-            <form action="/children/{{this.firstName}}" method="post">
+            <form action="/children/{{this.id}}/gifts" method="post">
             <td class="center" >
 
                 <select name="item" id="gifts">
@@ -48,7 +48,7 @@
     </tr>
     </thead>
     <tbody>
-    <form action="/children/add" method="post">
+    <form action="/children" method="post">
     <tr>
         <td class="center" >
                 <input name="newChild" type="text">
