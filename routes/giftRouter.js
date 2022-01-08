@@ -12,8 +12,7 @@ module.exports = () => {
   });
 
   giftRouter.post('/', async (req, res) => {
-    const { newChild } = req.body;
-    await Child.addNew(newChild);
+    await GiftRecord.add(req.body.giftName, Number(req.body.quantity));
     res.redirect('/gifts');
   });
 
