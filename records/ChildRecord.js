@@ -1,4 +1,6 @@
+const { v4: uuid } = require('uuid');
 
+const { pool } = require('../config/mariaDb');
 
 class Child {
   constructor(name, gifts = []) {
