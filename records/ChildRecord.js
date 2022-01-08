@@ -9,17 +9,15 @@ class Child {
     this.gifts = gifts;
   }
 
-  static async findOne(name) {
-    const foundChild =
+  static async findOne() {
 
-    return new Child(foundChild.firstName, foundChild.gifts);
   }
 
   static async findAll() {
 
   }
 
-  static async addNew(name) {
+  static async addNew() {
 
   }
 
