@@ -1,3 +1,4 @@
+<h1 class="header" >Lista dzieci</h1>
 <table>
     <thead>
     <tr>
@@ -20,21 +21,20 @@
                 {{/if}}
 
             </td>
-            <td>
-                <form action="/children/{{this.firstName}}" method="post">
+            <form action="/children/{{this.firstName}}" method="post">
+            <td class="center" >
+
                 <select name="item" id="gifts">
                     <option value="" selected disabled hidden>Wybierz prezent</option>
                     {{#each @root.gifts}}
                         <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
                     {{/each}}
                 </select>
-                <button type="submit">Dodaj</button>
-                </form>
             </td>
-<!--            <td>-->
-<!--                <a href="/client/{{this.id}}">Szczegóły</a>-->
-<!--                <form action="/client/{{this.id}}?_method=DELETE" method="POST" ><button class="delete" type="submit" >Usuń</button></form>-->
-<!--            </td>-->
+                <td class="center" >
+                    <button class="add-btn" type="submit">+</button>
+                </td>
+            </form>
         </tr>
     {{/each}}
     </tbody>
@@ -48,15 +48,16 @@
     </tr>
     </thead>
     <tbody>
+    <form action="/children/add" method="post">
     <tr>
-        <td>
-            <form action="/children/add" method="post">
-                <label for="newChild">Nowe Dziecko</label>
+        <td class="center" >
                 <input name="newChild" type="text">
-                <button type="submit">Dodaj</button>
-            </form>
+        </td>
+        <td class="center">
+            <button class="add-btn" type="submit">+</button>
         </td>
     </tr>
+    </form>
     </tbody>
 
 </table>
