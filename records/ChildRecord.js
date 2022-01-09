@@ -19,12 +19,14 @@ class ChildRecord {
   }
 
   static async findAll() {
-    const [children] = await pool.query('SELECT DISTINCT `FirstName` FROM `children`;');
-    const [childrenGifts] = await pool.query('SELECT `children`.`FirstName` AS "firstName",`gifts`.`name` FROM `children` LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`');
-    // console.log(children);
-    console.log(Object.values(groupByKey(childrenGifts, 'firstName')));
-
-    return Object.values(groupByKey(childrenGifts, 'firstName'));
+    const [childrenGifts] = await pool.query(
+      'SELECT `children`.`FirstName` AS "firstName",`gifts`.`name` '
+        + 'FROM `children` '
+        + 'LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`'
+        + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`;',
+    );
+    console.log(formatData(childrenGifts, 'firstName'));
+    return formatData(childrenGifts, 'firstName').map((obj) => new ChildRecord(obj.name, obj.gifts));
   }
 
   static async addNew() {
