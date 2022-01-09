@@ -1,6 +1,7 @@
 const { v4: uuid } = require('uuid');
 
 const { pool } = require('../config/mariaDb');
+const { groupByKey } = require('../utils/group-function');
 
 class Child {
   constructor(name, gifts = []) {
@@ -16,7 +17,12 @@ class Child {
   }
 
   static async findAll() {
+    const [children] = await pool.query('SELECT DISTINCT `FirstName` FROM `children`;');
+    const [childrenGifts] = await pool.query('SELECT `children`.`FirstName` AS "firstName",`gifts`.`name` FROM `children` LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`');
+    // console.log(children);
+    console.log(Object.values(groupByKey(childrenGifts, 'firstName')));
 
+    return Object.values(groupByKey(childrenGifts, 'firstName'));
   }
 
   static async addNew() {

@@ -6,6 +6,7 @@ const pool = mysql.createPool({
   database: 'megak_santa_list',
   namedPlaceholders: true,
   decimalNumbers: true,
+  // rowsAsArray: true,
 });
 
 module.exports = { pool };
