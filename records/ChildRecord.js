@@ -3,12 +3,12 @@ const { v4: uuid } = require('uuid');
 const { pool } = require('../config/mariaDb');
 const { formatData } = require('../utils/group-function');
 
-class Child {
+class ChildRecord {
   constructor(name, gifts = []) {
     if (name === undefined || name.length < 3) {
       throw new Error('Imię musi zawierać co najmniej 3 znaki');
     }
-    this.firstName = name;
+    this.name = name;
     this.gifts = gifts;
   }
 
@@ -39,5 +39,5 @@ class Child {
 }
 
 module.exports = {
-  Child,
+  ChildRecord,
 };
