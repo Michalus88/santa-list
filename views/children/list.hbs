@@ -11,11 +11,14 @@
     {{#each children}}
         <tr>
             <td>
-                {{this.firstName}}
+                {{this.[0].firstName}}
             </td>
             <td>
-                {{#if this.gifts}}
-                    {{this.gifts}}
+                {{log this.[0].name}}
+                {{#if this.[0].name}}
+                    {{#each this}}
+                        {{this.name}}
+                    {{/each}}
                 {{else}}
                     Brak
                 {{/if}}
