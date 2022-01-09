@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 
 const { pool } = require('../config/mariaDb');
-const { groupByKey } = require('../utils/group-function');
+const { formatData } = require('../utils/group-function');
 
 class Child {
   constructor(name, gifts = []) {
