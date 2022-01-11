@@ -9,7 +9,11 @@ function groupByKey(array, key) {
 function formatData(arrToGroup, groupBy) {
   const obj = groupByKey(arrToGroup, groupBy);
   return (
-    Object.entries(obj).map(([key, val]) => ({ name: key, gifts: val.map(({ name }) => name) })));
+    Object.entries(obj).map(([key, val]) => ({
+      id: val.map(({ id }) => id)[0],
+      name: key,
+      gifts: val.map(({ name }) => name),
+    })));
 }
 
 module.exports = {
