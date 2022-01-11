@@ -13,12 +13,16 @@ class GiftRecord {
     this.count = count;
   }
 
-  static async findOne(itemName) {
+  static async findOne(id) {
+    const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
 
+    return new GiftRecord(gift.id, gift.name, gift.count);
   }
 
   static async findAll() {
+    const [gifts] = await pool.query('SELECT * FROM `gifts`;');
 
+    return gifts.map((gift) => new GiftRecord(gift.id, gift.name, gift.count));
   }
 
   static async add(name, quantity) {
