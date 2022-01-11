@@ -1,3 +1,5 @@
+const { pool } = require('../config/mariaDb');
+
 class GiftRecord {
   constructor(name, count) {
     if (name === undefined || name.length < 3) {
