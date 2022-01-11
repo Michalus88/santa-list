@@ -8,15 +8,14 @@ module.exports = () => {
 
   childrenRouter.get('/', async (req, res) => {
     const children = await ChildRecord.findAll();
-
-    console.log(children);
     const gifts = await GiftRecord.findAll();
+
     res.render('children/list', { children, gifts });
   });
 
   childrenRouter.post('/', async (req, res) => {
-    const { newChild } = req.body;
-    await ChildRecord.addNew(newChild);
+    const newChild = new ChildRecord(req.body);
+    await newChild.insert();
     res.redirect('/children');
   });
 
