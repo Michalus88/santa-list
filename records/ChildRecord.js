@@ -4,12 +4,13 @@ const { pool } = require('../config/mariaDb');
 const { formatData } = require('../utils/group-function');
 
 class ChildRecord {
-  constructor(name, gifts = []) {
-    if (name === undefined || name.length < 3) {
+  constructor(obj) {
+    if (obj.name === undefined || obj.name.length < 3) {
       throw new Error('Imię musi zawierać co najmniej 3 znaki');
     }
-    this.name = name;
-    this.gifts = gifts;
+    this.id = obj.id;
+    this.name = obj.name;
+    this.gifts = obj.gifts;
   }
 
   static async findOne(id) {
@@ -20,17 +21,21 @@ class ChildRecord {
 
   static async findAll() {
     const [childrenGifts] = await pool.query(
-      'SELECT `children`.`FirstName` AS "firstName",`gifts`.`name` '
+      'SELECT `children`.id,`children`.`FirstName` AS "firstName",`gifts`.`name` '
         + 'FROM `children` '
         + 'LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`'
         + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`;',
     );
-    console.log(formatData(childrenGifts, 'firstName'));
-    return formatData(childrenGifts, 'firstName').map((obj) => new ChildRecord(obj.name, obj.gifts));
+
+    return formatData(childrenGifts, 'firstName').map((obj) => new ChildRecord(obj));
   }
 
-  static async addNew() {
-
+  async insert() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+    await pool.execute('INSERT INTO `children`(`id`,`firstName`) VALUES(:id,:name) ', { id: this.id, name: this.name });
+    return this.id;
   }
 
    addGift = async (isAvailable, itemName) => {
