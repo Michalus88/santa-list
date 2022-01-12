@@ -14,9 +14,15 @@ class ChildRecord {
   }
 
   static async findOne(id) {
-    const [[child]] = await pool.execute('SELECT * FROM `children` WHERE `id`=:id;', { id });
-    const [gifts] = await pool.execute('SELECT `gifts`.`name`, `children`.`firstName` FROM `children` LEFT JOIN `children_gifts` ON `children`.id=`children_gifts`.childId LEFT JOIN `gifts` ON `gifts`.id=`children_gifts`.`giftId` WHERE `childId`=:id ;', { id });
-    // console.log(child, gifts);
+    const [child] = await pool.query(
+      'SELECT `children`.id,`children`.`FirstName` AS "firstName",`gifts`.`name` '
+        + 'FROM `children` '
+        + 'LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`'
+        + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`'
+        + 'WHERE `children`.`id`=:id;', { id },
+    );
+
+    return new ChildRecord(formatData(child, 'firstName')[0]);
   }
 
   static async findAll() {
