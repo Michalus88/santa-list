@@ -26,8 +26,9 @@ class GiftRecord {
     return gifts.map((gift) => new GiftRecord(gift.id, gift.name, gift.count));
   }
 
-  static async add(name, quantity) {
-
+  async update() {
+    await pool.execute('UPDATE `gifts` SET `count` = :count WHERE `id`=:id ;',
+      { count: this.count - 1, id: this.id });
   }
 
   async quantityDecrement() {
