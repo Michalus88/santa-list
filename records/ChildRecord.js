@@ -44,13 +44,10 @@ class ChildRecord {
     return this.id;
   }
 
-   addGift = async (isAvailable, itemName) => {
-     if (isAvailable) {
-
-     } else {
-       throw new Error('Produkt niedostępny');
-     }
-   };
+   addGift = async (giftId) => {
+     await pool.execute('INSERT INTO `children_gifts`(childId,giftId) VALUES(:childId,:giftId) ;',
+       { childId: this.id, giftId });
+   }
 }
 
 module.exports = {
