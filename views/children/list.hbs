@@ -29,7 +29,7 @@
                 <select name="giftId" id="gifts">
                     <option value="" selected hidden>Wybierz prezent</option>
                     {{#each @root.gifts}}
-                        <option value={{this.id}}>{{this.name }}({{this.count}}sz)</option>
+                        <option {{#if (isZero this.count) }}  disabled   {{/if}} value={{this.id}}>{{this.name }}({{this.count}}sz)</option>
                     {{/each}}
                 </select>
             </td>

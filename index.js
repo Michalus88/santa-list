@@ -4,6 +4,7 @@ const { engine } = require('express-handlebars');
 const childrenRouter = require('./routes/childrenRouter');
 const giftRouter = require('./routes/giftRouter');
 const homeRouter = require('./routes/homeRouter');
+const { handlebarsHelpers } = require('./utils/handlebarsHelpers');
 
 const app = express();
 
@@ -12,7 +13,10 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
-app.engine('.hbs', engine({ extname: '.hbs' }));
+app.engine('.hbs', engine({
+  extname: '.hbs',
+  helpers: handlebarsHelpers,
+}));
 app.set('view engine', 'hbs');
 
 app.use('/', homeRouter());
