@@ -16,12 +16,13 @@ module.exports = () => {
   childrenRouter.post('/', async (req, res) => {
     const newChild = new ChildRecord(req.body);
     await newChild.insert();
+
     res.redirect('/children');
   });
 
   childrenRouter.post('/:id/gifts', async (req, res) => {
     const { giftId } = req.body;
-    if (giftId === '') return;
+    if (giftId === '') return res.redirect('/children');
 
     const child = await ChildRecord.findOne(req.params.id);
     const gift = await GiftRecord.findOne(giftId);
