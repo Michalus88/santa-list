@@ -3,7 +3,6 @@ const { pool } = require('../config/mariaDb');
 
 class GiftRecord {
   constructor(id, name, count) {
-    if (id === '') return;
     if (name === undefined || name.length < 3) {
       throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
     }
@@ -18,6 +17,7 @@ class GiftRecord {
   static async findOne(id) {
     const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
     if (!gift) throw new Error('Nie ma prezentu o podanym id');
+
     return new GiftRecord(gift.id, gift.name, gift.count);
   }
 
