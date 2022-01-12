@@ -2,6 +2,7 @@ const { pool } = require('../config/mariaDb');
 
 class GiftRecord {
   constructor(id, name, count) {
+    if (id === '') return;
     if (name === undefined || name.length < 3) {
       throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
     }
