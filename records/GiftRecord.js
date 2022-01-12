@@ -31,14 +31,12 @@ class GiftRecord {
       { count: this.count - 1, id: this.id });
   }
 
-  async quantityDecrement() {
-    let isAvailable = true;
-    items.forEach((item) => (item.name === this.name
-      ? item.amount === 0
-        ? isAvailable = false
-        : --item.amount
-      : null));
-    return [isAvailable, this.name];
+  async isGiftAvailable() {
+    const isAvailable = this.count !== 0;
+    if (!isAvailable) throw new Error('Produkt nie dostępny');
+    await this.update();
+
+    return this.name;
   }
 }
 
