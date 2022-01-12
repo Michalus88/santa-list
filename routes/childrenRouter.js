@@ -20,12 +20,13 @@ module.exports = () => {
   });
 
   childrenRouter.post('/:id/gifts', async (req, res) => {
-    const child = await ChildRecord.findOne(req.params.name);
-    const gift = await GiftRecord.findOne(req.body.item);
-    if (gift) {
-      const [isAvailable, itemName] = await gift.quantityDecrement();
-      child.addGift(isAvailable, itemName);
-    } else throw new Error('Nie ma takiego przedmiotu');
+    const { giftId } = req.body;
+    if (giftId === '') return;
+
+    const child = await ChildRecord.findOne(req.params.id);
+    const gift = await GiftRecord.findOne(giftId);
+    await gift.isGiftAvailable();
+    await child.addGift(giftId);
 
     res.redirect('/children');
   });
