@@ -26,10 +26,10 @@
             <form action="/children/{{this.id}}/gifts" method="post">
             <td class="center" >
 
-                <select name="item" id="gifts">
-                    <option value="" selected disabled hidden>Wybierz prezent</option>
+                <select name="giftId" id="gifts">
+                    <option value="" selected hidden>Wybierz prezent</option>
                     {{#each @root.gifts}}
-                        <option value={{this.name}}>{{this.name }}({{this.count}}sz)</option>
+                        <option value={{this.id}}>{{this.name }}({{this.count}}sz)</option>
                     {{/each}}
                 </select>
             </td>
