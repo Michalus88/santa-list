@@ -1,3 +1,4 @@
+const { v4: uuid } = require('uuid');
 const { pool } = require('../config/mariaDb');
 
 class GiftRecord {
@@ -24,6 +25,14 @@ class GiftRecord {
     const [gifts] = await pool.query('SELECT * FROM `gifts`;');
 
     return gifts.map((gift) => new GiftRecord(gift.id, gift.name, gift.count));
+  }
+
+  async insert() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+    await pool.execute('INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name) ', { id: this.id, name: this.name });
+    return this.id;
   }
 
   async update() {
