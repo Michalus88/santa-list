@@ -17,7 +17,7 @@ class GiftRecord {
 
   static async findOne(id) {
     const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
-    if (!gift) throw new Error('Nie ma prezentu o podanym id');
+    if (!gift) throw new NoFoundError(`Nie ma prezentu o podanym ${id}`);
 
     return new GiftRecord(gift);
   }
