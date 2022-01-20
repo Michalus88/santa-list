@@ -1,4 +1,5 @@
 const { v4: uuid } = require('uuid');
+const { NoFoundError, ValidateError } = require('../utils/errors');
 
 const { pool } = require('../config/mariaDb');
 const { formatData } = require('../utils/group-function');
@@ -6,7 +7,7 @@ const { formatData } = require('../utils/group-function');
 class ChildRecord {
   constructor(obj) {
     if (obj.name === undefined || obj.name.length < 3) {
-      throw new Error('Imię musi zawierać co najmniej 3 znaki');
+      throw new ValidateError('Imię musi zawierać co najmniej 3 znaki');
     }
     this.id = obj.id;
     this.name = obj.name;
@@ -21,6 +22,9 @@ class ChildRecord {
         + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`'
         + 'WHERE `children`.`id`=:id;', { id },
     );
+    if (child.length === 0) {
+      throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
+    }
 
     return new ChildRecord(formatData(child, 'firstName')[0]);
   }
