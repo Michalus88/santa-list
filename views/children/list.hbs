@@ -11,23 +11,25 @@
     {{#each children}}
         <tr>
             <td>
-                {{this.firstName}}
+                {{this.name}}
             </td>
             <td>
-                {{#if this.gifts}}
-                    {{this.gifts}}
+                {{#if this.gifts.[0]}}
+                    {{#each this.gifts}}
+                        {{this}},
+                    {{/each}}
                 {{else}}
                     Brak
                 {{/if}}
 
             </td>
-            <form action="/children/{{this.firstName}}" method="post">
+            <form action="/children/{{this.id}}/gifts" method="post">
             <td class="center" >
 
-                <select name="item" id="gifts">
-                    <option value="" selected disabled hidden>Wybierz prezent</option>
+                <select name="giftId" id="gifts">
+                    <option value="" selected hidden>Wybierz prezent</option>
                     {{#each @root.gifts}}
-                        <option value={{this.name}}>{{this.name }}({{this.amount}}sz)</option>
+                        <option {{#if (isZero this.count) }}  disabled   {{/if}} value={{this.id}}>{{this.name }}({{this.count}}sz)</option>
                     {{/each}}
                 </select>
             </td>
@@ -48,10 +50,10 @@
     </tr>
     </thead>
     <tbody>
-    <form action="/children/add" method="post">
+    <form action="/children" method="post">
     <tr>
         <td class="center" >
-                <input name="newChild" type="text">
+                <input name="name" type="text">
         </td>
         <td class="center">
             <button class="add-btn" type="submit">+</button>

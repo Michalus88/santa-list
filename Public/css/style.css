@@ -1,8 +1,11 @@
 *{
     font-family: Arial;
     box-sizing: border-box;
+    padding:0px;
+    margin:0px;
 }
 body{
+    min-height: 100vh;
     background-color: green;
     color:white;
 }
@@ -112,4 +115,12 @@ tr:nth-child(2n) {
 }
 .center {
     text-align: center;
+}
+
+.error {
+    width: 80%;
+    margin:10px auto;
+    padding: 50px;
+    border:1px solid #f80303;
+    background-color: #ff9191;
 }

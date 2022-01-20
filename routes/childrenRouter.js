@@ -1,34 +1,37 @@
 const { Router } = require('express');
 
-const { Child } = require('../records/ChildRecord');
+const { ChildRecord } = require('../records/ChildRecord');
 const { GiftRecord } = require('../records/GiftRecord');
+const { catchAsync } = require('../utils/errors');
 
 module.exports = () => {
   const childrenRouter = Router();
 
-  childrenRouter.get('/', async (req, res) => {
-    const children = await Child.findAll();
-    // console.log(children);
+  childrenRouter.get('/', catchAsync(async (req, res) => {
+    const children = await ChildRecord.findAll();
     const gifts = await GiftRecord.findAll();
+
     res.render('children/list', { children, gifts });
-  });
+  }));
 
-  childrenRouter.post('/add', async (req, res) => {
-    const { newChild } = req.body;
-    await Child.addNew(newChild);
-    res.redirect('/children');
-  });
-
-  childrenRouter.post('/:name', async (req, res) => {
-    const child = await Child.findOne(req.params.name);
-    const gift = await GiftRecord.findOne(req.body.item);
-    if (gift) {
-      const [isAvailable, itemName] = await gift.quantityDecrement();
-      child.addGift(isAvailable, itemName);
-    } else throw new Error('Nie ma takiego przedmiotu');
+  childrenRouter.post('/', catchAsync(async (req, res) => {
+    const newChild = new ChildRecord(req.body);
+    await newChild.insert();
 
     res.redirect('/children');
-  });
+  }));
+
+  childrenRouter.post('/:id/gifts', catchAsync(async (req, res) => {
+    const { giftId } = req.body;
+    if (giftId === '') return res.redirect('/children');
+
+    const child = await ChildRecord.findOne('232324244');
+    // const gift = await GiftRecord.findOne(giftId);
+    // await gift.isGiftAvailable();
+    // await child.addGift(giftId);
+
+    res.redirect('/children');
+  }));
 
   return childrenRouter;
 };

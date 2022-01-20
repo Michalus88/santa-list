@@ -14,7 +14,7 @@
     {{#each gifts}}
     <tr>
         <td class="center" >{{this.name}}</td>
-        <td class="center" >{{this.amount}}</td>
+        <td class="center" >{{this.count}}</td>
     </tr>
     {{/each}}
     </tbody>
@@ -34,10 +34,10 @@
     <tbody>
     <tr>
         <td  class="center">
-            <input type="text" name="giftName" required>
+            <input type="text" name="name" required>
         </td>
         <td class="center" >
-            <input type="number" name="quantity" required>
+            <input type="number" name="count" required>
         </td>
         <td  class="center"><button class="add-btn" type="submit" >+</button></td>
     </tr>

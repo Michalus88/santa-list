@@ -1,40 +1,58 @@
-const items = [{ name: 'kolejka', amount: 2 }, { name: 'klocki', amount: 10 }, { name: 'bączek', amount: 10 }];
+const { v4: uuid } = require('uuid');
+const { pool } = require('../config/mariaDb');
+const { NoFoundError, ValidateError } = require('../utils/errors');
 
 class GiftRecord {
-  constructor(name, quantity) {
-    if (name === undefined || name.length < 3) {
-      throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
+  constructor(giftObj) {
+    if (giftObj.name === undefined || giftObj.name.length < 3) {
+      throw new ValidateError('Nazwa musi zawierać co najmniej 3 znaki');
     }
-    if (quantity === undefined || typeof quantity !== 'number') {
-      throw new Error('Ilość jest wymagana i wartość musi być liczbą');
+    if (giftObj.count === undefined || typeof giftObj.count !== 'number') {
+      throw new ValidateError('Ilość jest wymagana i wartość musi być liczbą');
     }
-
-    this.name = name;
-    this.amount = quantity;
+    this.id = giftObj.id;
+    this.name = giftObj.name;
+    this.count = giftObj.count;
   }
 
-  static async findOne(itemName) {
-    const gift = items.filter((item) => item.name === itemName)[0];
+  static async findOne(id) {
+    const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
+    if (!gift) throw new Error('Nie ma prezentu o podanym id');
 
-    return gift === undefined ? null : new GiftRecord(gift.name, gift.amount);
+    return new GiftRecord(gift);
   }
 
   static async findAll() {
-    return items.map(({ name, amount }) => new GiftRecord(name, amount));
+    const [gifts] = await pool.query('SELECT * FROM `gifts`;');
+
+    return gifts.map((gift) => new GiftRecord(gift));
   }
 
-  static async add(name, quantity) {
-    items.push(new GiftRecord(name, quantity));
+  async insert() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+    await pool.execute('INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name,:count) ', {
+      id: this.id,
+      name: this.name,
+      count: this.count,
+    });
+
+    return this.id;
   }
 
-  async quantityDecrement() {
-    let isAvailable = true;
-    items.forEach((item) => (item.name === this.name
-      ? item.amount === 0
-        ? isAvailable = false
-        : --item.amount
-      : null));
-    return [isAvailable, this.name];
+  async giftCountUpdate(action) {
+    const newCount = action === 'increment' ? this.count + 1 : this.count - 1;
+    await pool.execute('UPDATE `gifts` SET `count` = :count WHERE `id`=:id ;',
+      { count: newCount, id: this.id });
+  }
+
+  async isGiftAvailable() {
+    const isAvailable = this.count !== 0;
+    if (!isAvailable) throw new Error('Produkt nie dostępny');
+    await this.giftCountUpdate('decrement');
+
+    return this.name;
   }
 }
 
