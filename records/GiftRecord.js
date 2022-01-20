@@ -9,29 +9,34 @@ class GiftRecord {
     if (count === undefined || typeof count !== 'number') {
       throw new Error('Ilość jest wymagana i wartość musi być liczbą');
     }
-    this.id = id;
-    this.name = name;
-    this.count = count;
+    this.id = giftObj.id;
+    this.name = giftObj.name;
+    this.count = giftObj.count;
   }
 
   static async findOne(id) {
     const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
     if (!gift) throw new Error('Nie ma prezentu o podanym id');
 
-    return new GiftRecord(gift.id, gift.name, gift.count);
+    return new GiftRecord(gift);
   }
 
   static async findAll() {
     const [gifts] = await pool.query('SELECT * FROM `gifts`;');
 
-    return gifts.map((gift) => new GiftRecord(gift.id, gift.name, gift.count));
+    return gifts.map((gift) => new GiftRecord(gift));
   }
 
   async insert() {
     if (!this.id) {
       this.id = uuid();
     }
-    await pool.execute('INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name) ', { id: this.id, name: this.name });
+    await pool.execute('INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name,:count) ', {
+      id: this.id,
+      name: this.name,
+      count: this.count,
+    });
+
     return this.id;
   }
 
