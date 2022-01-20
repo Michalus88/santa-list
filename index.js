@@ -5,6 +5,9 @@ const childrenRouter = require('./routes/childrenRouter');
 const giftRouter = require('./routes/giftRouter');
 const homeRouter = require('./routes/homeRouter');
 const { handlebarsHelpers } = require('./utils/handlebarsHelpers');
+const { errorHandler } = require('./utils/errors');
+
+require('./config/mariaDb');
 
 const app = express();
 
@@ -22,5 +25,7 @@ app.set('view engine', 'hbs');
 app.use('/', homeRouter());
 app.use('/children', childrenRouter());
 app.use('/gifts', giftRouter());
+
+app.use(errorHandler);
 
 app.listen(3000);
