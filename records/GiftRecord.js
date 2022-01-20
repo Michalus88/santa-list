@@ -1,13 +1,14 @@
 const { v4: uuid } = require('uuid');
 const { pool } = require('../config/mariaDb');
+const { NoFoundError, ValidateError } = require('../utils/errors');
 
 class GiftRecord {
-  constructor(id, name, count) {
-    if (name === undefined || name.length < 3) {
-      throw new Error('Nazwa musi zawierać co najmniej 3 znaki');
+  constructor(giftObj) {
+    if (giftObj.name === undefined || giftObj.name.length < 3) {
+      throw new ValidateError('Nazwa musi zawierać co najmniej 3 znaki');
     }
-    if (count === undefined || typeof count !== 'number') {
-      throw new Error('Ilość jest wymagana i wartość musi być liczbą');
+    if (giftObj.count === undefined || typeof giftObj.count !== 'number') {
+      throw new ValidateError('Ilość jest wymagana i wartość musi być liczbą');
     }
     this.id = giftObj.id;
     this.name = giftObj.name;
