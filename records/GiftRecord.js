@@ -41,15 +41,16 @@ class GiftRecord {
     return this.id;
   }
 
-  async update() {
+  async giftCountUpdate(action) {
+    const newCount = action === 'increment' ? this.count + 1 : this.count - 1;
     await pool.execute('UPDATE `gifts` SET `count` = :count WHERE `id`=:id ;',
-      { count: this.count - 1, id: this.id });
+      { count: newCount, id: this.id });
   }
 
   async isGiftAvailable() {
     const isAvailable = this.count !== 0;
     if (!isAvailable) throw new Error('Produkt nie dostępny');
-    await this.update();
+    await this.giftCountUpdate('decrement');
 
     return this.name;
   }
