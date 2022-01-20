@@ -1,20 +1,27 @@
 const { Router } = require('express');
 
 const { GiftRecord } = require('../records/GiftRecord');
+const { catchAsync } = require('../utils/errors');
 
 module.exports = () => {
   const giftRouter = Router();
 
-  giftRouter.get('/', async (req, res) => {
+  giftRouter.get('/', catchAsync(async (req, res) => {
     const gifts = await GiftRecord.findAll();
 
     res.render('gift/list', { gifts });
-  });
+  }));
 
-  giftRouter.post('/', async (req, res) => {
-    await GiftRecord.add(req.body.giftName, Number(req.body.quantity));
+  giftRouter.post('/', catchAsync(async (req, res) => {
+    const dataObj = {
+      ...req.body,
+      count: Number(req.body.count),
+    };
+    const newGiftRecord = new GiftRecord(dataObj);
+    await newGiftRecord.insert();
+
     res.redirect('/gifts');
-  });
+  }));
 
   return giftRouter;
 };
