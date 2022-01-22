@@ -52,7 +52,7 @@ class GiftRecord {
     if (!isAvailable) throw new Error('Produkt nie dostępny');
     await this.giftCountUpdate('decrement');
 
-    return this.name;
+    return this.id;
   }
 }
 
