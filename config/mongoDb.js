@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const url = 'mongodb://localhost:27017';
 const client = new MongoClient(url);
@@ -9,4 +9,5 @@ const db = client.db('santa-list');
 module.exports = {
   client,
   db,
+  ObjectId,
 };
