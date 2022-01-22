@@ -23,16 +23,14 @@ class ChildRecord {
 
   static async findAll() {
     const children = await db.collection('children').find().toArray();
-    // console.log(children);
+
     return children.map((obj) => new ChildRecord(obj));
   }
 
   async insert() {
-    if (!this.id) {
-      this.id = uuid();
-    }
+    const id = await db.collection('children').insertOne({ name: this.name, gifts: [] });
 
-    return this.id;
+    return id;
   }
 
   addGift = async (name) => {
