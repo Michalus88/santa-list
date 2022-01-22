@@ -1,7 +1,9 @@
 const { Router } = require('express');
 
-const { ChildRecord } = require('../records/ChildRecord');
-const { GiftRecord } = require('../records/GiftRecord');
+// const { ChildRecord } = require('../records/ChildRecord');
+const { ChildRecord } = require('../records/mongo/child.record');
+// const { GiftRecord } = require('../records/GiftRecord');
+const { GiftRecord } = require('../records/mongo/gift.record');
 const { catchAsync } = require('../utils/errors');
 
 module.exports = () => {
@@ -24,11 +26,10 @@ module.exports = () => {
   childrenRouter.post('/:id/gifts', catchAsync(async (req, res) => {
     const { giftId } = req.body;
     if (giftId === '') return res.redirect('/children');
-
-    const child = await ChildRecord.findOne('232324244');
-    // const gift = await GiftRecord.findOne(giftId);
-    // await gift.isGiftAvailable();
-    // await child.addGift(giftId);
+    console.log(giftId);
+    const child = await ChildRecord.findOne(req.params.id);
+    const gift = await GiftRecord.findOne(giftId);
+    await child.addGift(await gift.isGiftAvailable());
 
     res.redirect('/children');
   }));
