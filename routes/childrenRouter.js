@@ -26,7 +26,7 @@ module.exports = () => {
   childrenRouter.post('/:id/gifts', catchAsync(async (req, res) => {
     const { giftId } = req.body;
     if (giftId === '') return res.redirect('/children');
-    console.log(giftId);
+
     const child = await ChildRecord.findOne(req.params.id);
     const gift = await GiftRecord.findOne(giftId);
     await child.addGift(await gift.isGiftAvailable());

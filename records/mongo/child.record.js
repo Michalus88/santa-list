@@ -1,13 +1,12 @@
-const { v4: uuid } = require('uuid');
-const { NoFoundError, ValidateError } = require('../../utils/errors');
-
 const { db, ObjectId } = require('../../config/mongoDb');
+const { NoFoundError, ValidateError } = require('../../utils/errors');
 
 class ChildRecord {
   constructor(obj) {
     if (obj.name === undefined || obj.name.length < 3) {
       throw new ValidateError('Imię musi zawierać co najmniej 3 znaki');
     }
+    // eslint-disable-next-line no-underscore-dangle
     this.id = obj._id;
     this.name = obj.name;
     this.gifts = obj.gifts;

@@ -18,6 +18,7 @@ module.exports = () => {
       ...req.body,
       count: Number(req.body.count),
     };
+
     const newGiftRecord = new GiftRecord(dataObj);
     await newGiftRecord.insert();
 

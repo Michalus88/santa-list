@@ -1,4 +1,3 @@
-const { v4: uuid } = require('uuid');
 const { db, ObjectId } = require('../../config/mongoDb');
 const { NoFoundError, ValidateError } = require('../../utils/errors');
 
@@ -10,6 +9,7 @@ class GiftRecord {
     if (giftObj.count === undefined || typeof giftObj.count !== 'number') {
       throw new ValidateError('Ilość jest wymagana i wartość musi być liczbą');
     }
+    // eslint-disable-next-line no-underscore-dangle
     this.id = giftObj._id;
     this.name = giftObj.name;
     this.count = giftObj.count;
@@ -27,11 +27,11 @@ class GiftRecord {
   }
 
   async insert() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-
-    return this.id;
+    const id = await db.collection('gifts').insertOne({
+      name: String(this.name),
+      count: this.count,
+    });
+    return id;
   }
 
   async giftCountUpdate(action) {
