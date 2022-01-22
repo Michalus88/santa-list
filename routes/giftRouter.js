@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
-// const { GiftRecord } = require('../records/GiftRecord');
-const { GiftRecord } = require('../records/mongo/gift.record');
+// const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
+const { GiftRecord } = require('../records/mongo/gift.record'); // mongoDB
 const { catchAsync } = require('../utils/errors');
 
 module.exports = () => {
