@@ -1,5 +1,5 @@
-const { v4: uuid } = require('uuid');
-const { NoFoundError, ValidateError } = require('../utils/errors');
+import { v4: uuid } from 'uuid';
+import { NoFoundError, ValidateError } from '../utils/errors';
 
 const { pool } = require('../config/mariaDb');
 const { formatData } = require('../utils/group-function');

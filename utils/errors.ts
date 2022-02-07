@@ -1,7 +1,7 @@
-class ValidateError extends Error {}
-class NoFoundError extends Error {}
+export class ValidateError extends Error {}
+export class NoFoundError extends Error {}
 
-function errorHandler(err, req, res, next) {
+export function errorHandler(err, req, res, next) {
   console.error(err);
   const message = err instanceof ValidateError ? err.message : 'Proszę spróbować później...';
   const code = err instanceof ValidateError ? 400 : 500;
@@ -16,15 +16,8 @@ function errorHandler(err, req, res, next) {
   res.render('error', { message });
 }
 
-function catchAsync(fn) {
+export function catchAsync(fn) {
   return (req, res, next) => {
     fn(req, res, next).catch((err) => next(err));
   };
 }
-
-module.exports = {
-  catchAsync,
-  errorHandler,
-  ValidateError,
-  NoFoundError,
-};
