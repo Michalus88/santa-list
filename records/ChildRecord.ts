@@ -8,13 +8,13 @@ import { Gift } from "./GiftRecord";
 interface Payload {
   id: string;
   name: string;
-  gifts: Gift[];
+  gifts: string[];
 }
 
 class ChildRecord {
   id: string;
   name: string;
-  gifts: Gift[];
+  gifts: string[];
   constructor(obj: Payload) {
     if (obj.name === undefined || obj.name.length < 3) {
       throw new ValidateError("Imię musi zawierać co najmniej 3 znaki");
