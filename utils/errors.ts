@@ -1,7 +1,15 @@
+import {
+  Request, Response, ErrorRequestHandler, NextFunction, RequestHandler,
+} from 'express';
+
 export class ValidateError extends Error {}
 export class NoFoundError extends Error {}
 
-export function errorHandler(err, req, res, next) {
+export function errorHandler(
+  err:ErrorRequestHandler,
+  req: Request, res:Response,
+  next:NextFunction,
+) {
   console.error(err);
   const message = err instanceof ValidateError ? err.message : 'Proszę spróbować później...';
   const code = err instanceof ValidateError ? 400 : 500;
@@ -16,8 +24,10 @@ export function errorHandler(err, req, res, next) {
   res.render('error', { message });
 }
 
-export function catchAsync(fn) {
+type Cb = (req: Request, res: Response, next: NextFunction)=>Promise<void>;
+
+export function catchAsync(fn:Cb):RequestHandler {
   return (req, res, next) => {
-    fn(req, res, next).catch((err) => next(err));
+    fn(req, res, next).catch((err:Error) => next(err));
   };
 }

@@ -1,61 +1,76 @@
-const { v4: uuid } = require('uuid');
-const { pool } = require('../config/mariaDb');
-const { NoFoundError, ValidateError } = require('../utils/errors');
+const { v4: uuid } = require("uuid");
+const { pool } = require("../config/mariaDb");
+const { NoFoundError, ValidateError } = require("../utils/errors");
 
-class GiftRecord {
-  constructor(giftObj) {
+export interface Gift {
+  id: string;
+  name: string;
+  count: number;
+}
+
+type IncDec = "increment" | "decrement";
+
+export class GiftRecord {
+  id: string;
+  name: string;
+  count: number;
+  constructor(giftObj: Gift) {
     if (giftObj.name === undefined || giftObj.name.length < 3) {
-      throw new ValidateError('Nazwa musi zawierać co najmniej 3 znaki');
+      throw new ValidateError("Nazwa musi zawierać co najmniej 3 znaki");
     }
-    if (giftObj.count === undefined || typeof giftObj.count !== 'number') {
-      throw new ValidateError('Ilość jest wymagana i wartość musi być liczbą');
+    if (giftObj.count === undefined || typeof giftObj.count !== "number") {
+      throw new ValidateError("Ilość jest wymagana i wartość musi być liczbą");
     }
     this.id = giftObj.id;
     this.name = giftObj.name;
     this.count = giftObj.count;
   }
 
-  static async findOne(id) {
-    const [[gift]] = await pool.query('SELECT * FROM `gifts` WHERE `id`=:id ;', { id });
+  static async findOne(id: string) {
+    const [[gift]] = await pool.query(
+      "SELECT * FROM `gifts` WHERE `id`=:id ;",
+      { id }
+    );
     if (!gift) throw new NoFoundError(`Nie ma prezentu o podanym ${id}`);
 
     return new GiftRecord(gift);
   }
 
   static async findAll() {
-    const [gifts] = await pool.query('SELECT * FROM `gifts`;');
+    const [gifts] = await pool.query("SELECT * FROM `gifts`;");
 
-    return gifts.map((gift) => new GiftRecord(gift));
+    return gifts.map((gift: Gift) => new GiftRecord(gift));
   }
 
   async insert() {
     if (!this.id) {
       this.id = uuid();
     }
-    await pool.execute('INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name,:count) ', {
-      id: this.id,
-      name: this.name,
-      count: this.count,
-    });
+    await pool.execute(
+      "INSERT INTO `gifts`(`id`,`name`,`count`) VALUES(:id,:name,:count) ",
+      {
+        id: this.id,
+        name: this.name,
+        count: this.count,
+      }
+    );
 
     return this.id;
   }
 
-  async giftCountUpdate(action) {
-    const newCount = action === 'increment' ? this.count + 1 : this.count - 1;
-    await pool.execute('UPDATE `gifts` SET `count` = :count WHERE `id`=:id ;',
-      { count: newCount, id: this.id });
+  async giftCountUpdate(action: IncDec) {
+    const newCount = action === "increment" ? this.count + 1 : this.count - 1;
+    await pool.execute("UPDATE `gifts` SET `count` = :count WHERE `id`=:id ;", {
+      count: newCount,
+      id: this.id,
+    });
   }
 
   async isGiftAvailable() {
     const isAvailable = this.count !== 0;
-    if (!isAvailable) throw new Error('Produkt nie dostępny');
-    await this.giftCountUpdate('decrement');
+    if (!isAvailable) throw new Error("Produkt nie dostępny");
+    await this.giftCountUpdate("decrement");
 
     return this.id;
   }
 }
-
-module.exports = {
-  GiftRecord,
-};

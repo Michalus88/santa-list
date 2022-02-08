@@ -1,12 +1,11 @@
-const mysql = require('mysql2/promise');
+import mysql from "mysql2/promise";
 
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  database: 'megak_santa_list',
+// eslint-disable-next-line import/prefer-default-export
+export const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  database: "megak_santa_list",
   namedPlaceholders: true,
   decimalNumbers: true,
   // rowsAsArray: true,
 });
-
-module.exports = { pool };

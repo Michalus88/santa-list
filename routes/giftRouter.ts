@@ -1,8 +1,10 @@
+// mongoDB
+import { catchAsync } from '../utils/errors';
+
 const { Router } = require('express');
 
 // const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
-const { GiftRecord } = require('../records/mongo/gift.record'); // mongoDB
-const { catchAsync } = require('../utils/errors');
+const { GiftRecord } = require('../records/mongo/gift.record');
 
 module.exports = () => {
   const giftRouter = Router();

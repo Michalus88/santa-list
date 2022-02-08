@@ -1,29 +1,30 @@
-const { Router } = require('express');
+import { Router, Request, Response } from 'express';
+// mongoDB
+import { catchAsync } from '../utils/errors';
 
 // const { ChildRecord } = require('../records/ChildRecord'); //mariaDB
 const { ChildRecord } = require('../records/mongo/child.record'); // mongoDB
 // const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
-const { GiftRecord } = require('../records/mongo/gift.record');// mongoDB
-const { catchAsync } = require('../utils/errors');
+const { GiftRecord } = require('../records/mongo/gift.record');
 
 module.exports = () => {
   const childrenRouter = Router();
 
-  childrenRouter.get('/', catchAsync(async (req, res) => {
+  childrenRouter.get('/', catchAsync(async (req:Request, res:Response) => {
     const children = await ChildRecord.findAll();
     const gifts = await GiftRecord.findAll();
 
     res.render('children/list', { children, gifts });
   }));
 
-  childrenRouter.post('/', catchAsync(async (req, res) => {
+  childrenRouter.post('/', catchAsync(async (req:Request, res:Response) => {
     const newChild = new ChildRecord(req.body);
     await newChild.insert();
 
     res.redirect('/children');
   }));
 
-  childrenRouter.post('/:id/gifts', catchAsync(async (req, res) => {
+  childrenRouter.post('/:id/gifts', catchAsync(async (req:Request, res:Response) => {
     const { giftId } = req.body;
     if (giftId === '') return res.redirect('/children');
 

@@ -6,7 +6,7 @@ function groupByKey(array, key) {
     }, {});
 }
 
-function formatData(arrToGroup, groupBy) {
+export function formatData(arrToGroup, groupBy:string) {
   const obj = groupByKey(arrToGroup, groupBy);
   return (
     Object.entries(obj).map(([key, val]) => ({
@@ -15,7 +15,3 @@ function formatData(arrToGroup, groupBy) {
       gifts: val.map(({ name }) => name),
     })));
 }
-
-module.exports = {
-  formatData,
-};
