@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
-// const { ChildRecord } = require('../records/ChildRecord'); //mariaDB
-const { ChildRecord } = require('../records/mongo/child.record'); // mongoDB
+const { ChildRecord } = require('../records/ChildRecord'); // mariaDB
+// const { ChildRecord } = require('../records/mongo/child.record'); // mongoDB
 // const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
 const { GiftRecord } = require('../records/mongo/gift.record');// mongoDB
 const { catchAsync } = require('../utils/errors');
@@ -12,6 +12,7 @@ module.exports = () => {
   childrenRouter.get('/', catchAsync(async (req, res) => {
     const children = await ChildRecord.findAll();
     const gifts = await GiftRecord.findAll();
+    await ChildRecord.findOne('07092b21-6e67-11ec-860f-204747ae7160');
 
     res.render('children/list', { children, gifts });
   }));
