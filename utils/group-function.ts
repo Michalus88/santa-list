@@ -1,4 +1,6 @@
-function groupByKey(array, key) {
+type Key = "id"|"firstName"|"name";
+
+function groupByKey(array:Record<Key,string>[], key:Key) {
   return array
     .reduce((hash, obj) => {
       if (obj[key] === undefined) return hash;
@@ -6,7 +8,15 @@ function groupByKey(array, key) {
     }, {});
 }
 
-export function formatData(arrToGroup, groupBy:string) {
+
+
+export interface ChildEntity {
+    id: string;
+    firstName: string;
+    name: string;
+}
+
+export function formatData(arrToGroup:ChildEntity[], groupBy:Key) {
   const obj = groupByKey(arrToGroup, groupBy);
   return (
     Object.entries(obj).map(([key, val]) => ({
