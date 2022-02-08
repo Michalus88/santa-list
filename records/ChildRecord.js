@@ -20,7 +20,8 @@ class ChildRecord {
         + 'FROM `children` '
         + 'LEFT JOIN `children_gifts` ON `children`.`id`=`children_gifts`.`childId`'
         + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`'
-        + 'WHERE `children`.`id`=:id;', { id },
+        + 'WHERE `children`.`id`=:id;',
+      { id },
     );
     if (child.length === 0) {
       throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
@@ -37,21 +38,28 @@ class ChildRecord {
         + 'LEFT JOIN `gifts` ON `gifts`.`id`=`children_gifts`.`giftId`;',
     );
 
-    return formatData(childrenGifts, 'firstName').map((obj) => new ChildRecord(obj));
+    return formatData(childrenGifts, 'firstName').map(
+      (obj) => new ChildRecord(obj),
+    );
   }
 
   async insert() {
     if (!this.id) {
       this.id = uuid();
     }
-    await pool.execute('INSERT INTO `children`(`id`,`firstName`) VALUES(:id,:name) ', { id: this.id, name: this.name });
+    await pool.execute(
+      'INSERT INTO `children`(`id`,`firstName`) VALUES(:id,:name) ',
+      { id: this.id, name: this.name },
+    );
     return this.id;
   }
 
-   addGift = async (giftId) => {
-     await pool.execute('INSERT INTO `children_gifts`(childId,giftId) VALUES(:childId,:giftId) ;',
-       { childId: this.id, giftId });
-   }
+  addGift = async (giftId) => {
+    await pool.execute(
+      'INSERT INTO `children_gifts`(childId,giftId) VALUES(:childId,:giftId) ;',
+      { childId: this.id, giftId },
+    );
+  };
 }
 
 module.exports = {
