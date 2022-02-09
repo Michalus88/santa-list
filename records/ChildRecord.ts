@@ -4,7 +4,6 @@ import {FieldPacket} from "mysql2"
 
 import { pool } from "../config/mariaDb";
 import { formatData, ChildEntity } from "../utils/group-function";
-import { Gift } from "./GiftRecord";
 
 type ChildrenRecordsData =  [ChildEntity[],FieldPacket[]];
 

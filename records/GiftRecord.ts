@@ -1,17 +1,14 @@
 import { v4 as uuid } from "uuid";
-import { pool } from "../config/mariaDb";
-import { NoFoundError, ValidateError } from "../utils/errors";
-import {ChildEntity} from "../utils/group-function";
 import {FieldPacket} from "mysql2";
 
-export interface Gift {
-  id?: string;
-  name: string;
-  count: number;
-}
+import { pool } from "../config/mariaDb";
+import { NoFoundError, ValidateError } from "../utils/errors";
+import { IncDec, Gift } from "../interfaces/gift";
 
-type IncDec = "increment" | "decrement";
+
+
 type GiftRecordData = [GiftRecord[],FieldPacket[]];
+
 export class GiftRecord {
   id?: string;
   name: string;
