@@ -1,8 +1,7 @@
-// mongoDB
 import { catchAsync } from '../utils/errors';
 import { Router } from 'express';
-import { GiftRecord } from '../records/GiftRecord'; //mariaDB
-// import { GiftRecord } from '../records/mongo/gift.record';
+// import { GiftRecord } from '../records/GiftRecord'; //mariaDB
+import { GiftRecord } from '../records/mongo/gift.record'; // mongoDB
 
 export default() => {
   const giftRouter = Router();
