@@ -1,13 +1,13 @@
 import express from 'express';
 import { engine } from 'express-handlebars';
 
-const childrenRouter = require('./routes/childrenRouter');
-const giftRouter = require('./routes/giftRouter');
-const homeRouter = require('./routes/homeRouter');
-const { handlebarsHelpers } = require('./utils/handlebarsHelpers');
-const { errorHandler } = require('./utils/errors');
+import childrenRouter from './routes/childrenRouter';
+import giftRouter from './routes/giftRouter';
+import homeRouter from './routes/homeRouter';
+import {handlebarsHelpers} from './utils/handlebarsHelpers';
+import {errorHandler} from './utils/errors';
 
-require('./config/mariaDb');
+import './config/mariaDb';
 
 const app = express();
 
