@@ -14,6 +14,7 @@ class ChildRecord {
 
   static async findOne(id) {
     const child = await db.collection('children').findOne({ _id: ObjectId(String(id)) });
+    console.log(child);
     if (child.length === 0) {
       throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
     }
@@ -23,7 +24,7 @@ class ChildRecord {
 
   static async findAll() {
     const children = await db.collection('children').find().toArray();
-
+    console.log(children);
     return children.map((obj) => new ChildRecord(obj));
   }
 
