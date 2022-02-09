@@ -1,7 +1,7 @@
-const { db, ObjectId } = require('../../config/mongoDb');
-const { NoFoundError, ValidateError } = require('../../utils/errors');
+import { db, ObjectId } from '../../config/mongoDb';
+import { NoFoundError, ValidateError } from '../../utils/errors';
 
-class GiftRecord {
+export class GiftRecord {
   constructor(giftObj) {
     if (giftObj.name === undefined || giftObj.name.length < 3) {
       throw new ValidateError('Nazwa musi zawierać co najmniej 3 znaki');
@@ -49,6 +49,4 @@ class GiftRecord {
   }
 }
 
-module.exports = {
-  GiftRecord,
-};
+

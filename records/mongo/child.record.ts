@@ -1,8 +1,11 @@
-const { db, ObjectId } = require('../../config/mongoDb');
-const { NoFoundError, ValidateError } = require('../../utils/errors');
+import { db, ObjectId } from '../../config/mongoDb';
+import { NoFoundError, ValidateError } from '../../utils/errors';
 
-class ChildRecord {
-  constructor(obj) {
+export class ChildRecord {
+  id?:string;
+  name:string;
+  gifts:string[];
+  constructor(obj:ChildRecord) {
     if (obj.name === undefined || obj.name.length < 3) {
       throw new ValidateError('Imię musi zawierać co najmniej 3 znaki');
     }
@@ -12,7 +15,7 @@ class ChildRecord {
     this.gifts = obj.gifts;
   }
 
-  static async findOne(id) {
+  static async findOne(id:string) {
     const child = await db.collection('children').findOne({ _id: ObjectId(String(id)) });
     if (child.length === 0) {
       throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
@@ -37,6 +40,4 @@ class ChildRecord {
     await db.collection('children').updateOne({ _id: ObjectId(String(this.id)) }, { $push: { gifts: name } });
   }
 }
-module.exports = {
-  ChildRecord,
-};
+
