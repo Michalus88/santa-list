@@ -1,8 +1,19 @@
 import { db, ObjectId } from '../../config/mongoDb';
 import { NoFoundError, ValidateError } from '../../utils/errors';
+import {IncDec} from "../../interfaces/gift";
+interface GiftObj {
+  _id?:string;
+  name:string;
+  count:number;
+}
+
+
 
 export class GiftRecord {
-  constructor(giftObj) {
+  id?:string;
+  name:string;
+  count:number;
+  constructor(giftObj:GiftObj) {
     if (giftObj.name === undefined || giftObj.name.length < 3) {
       throw new ValidateError('Nazwa musi zawierać co najmniej 3 znaki');
     }
@@ -15,14 +26,14 @@ export class GiftRecord {
     this.count = giftObj.count;
   }
 
-  static async findOne(id) {
-    const gift = await db.collection('gifts').findOne({ _id: ObjectId(String(id)) });
+  static async findOne(id:string) {
+    const gift = await db.collection('gifts').findOne({ _id: new ObjectId(String(id)) })as unknown as GiftObj;
 
     return new GiftRecord(gift);
   }
 
   static async findAll() {
-    const gifts = await db.collection('gifts').find().toArray();
+    const gifts = await db.collection('gifts').find().toArray()as unknown as GiftObj[];
     return gifts.map((gift) => new GiftRecord(gift));
   }
 
@@ -34,7 +45,7 @@ export class GiftRecord {
     return id;
   }
 
-  async giftCountUpdate(action) {
+  async giftCountUpdate(action:IncDec) {
     const newCount = action === 'increment' ? this.count + 1 : this.count - 1;
     console.log(newCount);
     await db.collection('gifts').updateOne({ _id: this.id }, { $set: { count: newCount } });

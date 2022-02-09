@@ -21,17 +21,17 @@ export class ChildRecord {
     this.gifts = obj.gifts;
   }
 
-  static async findOne(id:string) {
+  static async findOne(id:string):Promise<ChildRecord> {
     const child = await db.collection('children').findOne({ _id: new ObjectId(String(id)) })as unknown as PayloadChildRecord;
-    if (child.length === 0) {
+    if (!child) {
       throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
     }
 
     return new ChildRecord(child);
   }
 
-  static async findAll() {
-    const children = await db.collection('children').find().toArray();
+  static async findAll():Promise<ChildRecord[]> {
+    const children = await db.collection('children').find().toArray()as unknown as PayloadChildRecord[];
 
     return children.map((obj) => new ChildRecord(obj));
   }
@@ -42,8 +42,8 @@ export class ChildRecord {
     return id;
   }
 
-  addGift = async (name) => {
-    await db.collection('children').updateOne({ _id: ObjectId(String(this.id)) }, { $push: { gifts: name } });
+  addGift = async (name:string):Promise<void> => {
+    await db.collection('children').updateOne({ _id:new ObjectId(String(this.id)) }, { $push: { gifts: name } });
   }
 }
 
