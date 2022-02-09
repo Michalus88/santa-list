@@ -1,12 +1,10 @@
 // mongoDB
 import { catchAsync } from '../utils/errors';
+import { Router } from 'express';
+import { GiftRecord } from '../records/GiftRecord'; //mariaDB
+// import { GiftRecord } from '../records/mongo/gift.record';
 
-const { Router } = require('express');
-
-// const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
-const { GiftRecord } = require('../records/mongo/gift.record');
-
-module.exports = () => {
+export default() => {
   const giftRouter = Router();
 
   giftRouter.get('/', catchAsync(async (req, res) => {

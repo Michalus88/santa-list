@@ -2,12 +2,12 @@ import { Router, Request, Response } from 'express';
 // mongoDB
 import { catchAsync } from '../utils/errors';
 
-// const { ChildRecord } = require('../records/ChildRecord'); //mariaDB
-const { ChildRecord } = require('../records/mongo/child.record'); // mongoDB
-// const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
-const { GiftRecord } = require('../records/mongo/gift.record');
+const { ChildRecord } = require('../records/ChildRecord'); //mariaDB
+// const { ChildRecord } = require('../records/mongo/child.record'); // mongoDB
+const { GiftRecord } = require('../records/GiftRecord'); //mariaDB
+// const { GiftRecord } = require('../records/mongo/gift.record');
 
-module.exports = () => {
+export default () => {
   const childrenRouter = Router();
 
   childrenRouter.get('/', catchAsync(async (req:Request, res:Response) => {
