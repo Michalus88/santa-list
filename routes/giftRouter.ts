@@ -17,7 +17,7 @@ export default() => {
     const dataObj = {
       ...req.body,
       count: Number(req.body.count),
-    };
+    } as GiftRecord;
 
     const newGiftRecord = new GiftRecord(dataObj);
     await newGiftRecord.insert();
