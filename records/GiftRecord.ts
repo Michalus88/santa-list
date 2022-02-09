@@ -1,6 +1,8 @@
-const { v4: uuid } = require("uuid");
-const { pool } = require("../config/mariaDb");
-const { NoFoundError, ValidateError } = require("../utils/errors");
+import { v4 as uuid } from "uuid";
+import { pool } from "../config/mariaDb";
+import { NoFoundError, ValidateError } from "../utils/errors";
+import {ChildEntity} from "../utils/group-function";
+import {FieldPacket} from "mysql2";
 
 export interface Gift {
   id: string;
@@ -9,7 +11,7 @@ export interface Gift {
 }
 
 type IncDec = "increment" | "decrement";
-
+type GiftRecordData = [GiftRecord[],FieldPacket[]];
 export class GiftRecord {
   id: string;
   name: string;
@@ -26,23 +28,23 @@ export class GiftRecord {
     this.count = giftObj.count;
   }
 
-  static async findOne(id: string) {
+  static async findOne(id: string):Promise<GiftRecord | null> {
     const [[gift]] = await pool.query(
       "SELECT * FROM `gifts` WHERE `id`=:id ;",
       { id }
-    );
+    )as GiftRecordData;
     if (!gift) throw new NoFoundError(`Nie ma prezentu o podanym ${id}`);
 
     return new GiftRecord(gift);
   }
 
-  static async findAll() {
-    const [gifts] = await pool.query("SELECT * FROM `gifts`;");
+  static async findAll():Promise<GiftRecord[] | null> {
+    const [gifts] = await pool.query("SELECT * FROM `gifts`;") as GiftRecordData;
 
     return gifts.map((gift: Gift) => new GiftRecord(gift));
   }
 
-  async insert() {
+  async insert():Promise<string> {
     if (!this.id) {
       this.id = uuid();
     }
