@@ -1,8 +1,13 @@
+import {Payload} from "../records/ChildRecord";
+
 type Key = "id"|"firstName"|"name";
+type ChildData = {
+    [k: string]: Record<Key,string>[];
+}
 
 function groupByKey(array:Record<Key,string>[], key:Key) {
   return array
-    .reduce((hash, obj) => {
+    .reduce((hash:ChildData, obj) => {
       if (obj[key] === undefined) return hash;
       return Object.assign(hash, { [obj[key]]: (hash[obj[key]] || []).concat(obj) });
     }, {});
@@ -16,7 +21,7 @@ export interface ChildEntity {
     name: string;
 }
 
-export function formatData(arrToGroup:ChildEntity[], groupBy:Key) {
+export function formatData(arrToGroup:ChildEntity[], groupBy:Key):Payload[] {
   const obj = groupByKey(arrToGroup, groupBy);
   return (
     Object.entries(obj).map(([key, val]) => ({
