@@ -1,6 +1,9 @@
 import  { MongoClient, ObjectId } from 'mongodb';
 
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGO_CONNECTION;
+if(!url){
+  throw new Error("Please add connection url")
+}
 const client = new MongoClient(url);
 client.connect();
 
