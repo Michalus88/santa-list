@@ -22,7 +22,7 @@ export class ChildRecord {
   }
 
   static async findOne(id:string) {
-    const child = await db.collection('children').findOne({ _id: ObjectId(String(id)) });
+    const child = await db.collection('children').findOne({ _id: new ObjectId(String(id)) })as unknown as PayloadChildRecord;
     if (child.length === 0) {
       throw new NoFoundError(`Nie istnieje dziecko o podanym id :${id}`);
     }
