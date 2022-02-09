@@ -12,7 +12,6 @@ module.exports = () => {
   childrenRouter.get('/', catchAsync(async (req, res) => {
     const children = await ChildRecord.findAll();
     const gifts = await GiftRecord.findAll();
-    await ChildRecord.findOne('61e9aeac34f134757a9910e5');
 
     res.render('children/list', { children, gifts });
   }));
