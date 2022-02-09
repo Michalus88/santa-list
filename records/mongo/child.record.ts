@@ -1,11 +1,17 @@
 import { db, ObjectId } from '../../config/mongoDb';
 import { NoFoundError, ValidateError } from '../../utils/errors';
 
+interface PayloadChildRecord {
+  _id?:string;
+  name:string;
+  gifts:string[];
+}
+
 export class ChildRecord {
   id?:string;
   name:string;
   gifts:string[];
-  constructor(obj:ChildRecord) {
+  constructor(obj:PayloadChildRecord) {
     if (obj.name === undefined || obj.name.length < 3) {
       throw new ValidateError('Imię musi zawierać co najmniej 3 znaki');
     }
