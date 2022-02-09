@@ -5,7 +5,7 @@ import {ChildEntity} from "../utils/group-function";
 import {FieldPacket} from "mysql2";
 
 export interface Gift {
-  id: string;
+  id?: string;
   name: string;
   count: number;
 }
@@ -13,7 +13,7 @@ export interface Gift {
 type IncDec = "increment" | "decrement";
 type GiftRecordData = [GiftRecord[],FieldPacket[]];
 export class GiftRecord {
-  id: string;
+  id?: string;
   name: string;
   count: number;
   constructor(giftObj: Gift) {
